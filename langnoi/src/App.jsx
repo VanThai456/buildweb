@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
+import PromoModal from './components/PromoModal';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import TourPage from './pages/TourPage';
@@ -10,9 +11,11 @@ import ResortPage from './pages/ResortPage';
 import PricingPage from './pages/PricingPage';
 import BookingPage from './pages/BookingPage';
 import ContactPage from './pages/ContactPage';
+import GuidePage from './pages/GuidePage';
 
 export default function App() {
   const [lang, setLang] = useState('vi');
+  const [isPromoOpen, setIsPromoOpen] = useState(true);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState('Vé tham quan & Tour trọn gói');
   const [bookingDetails, setBookingDetails] = useState({
@@ -33,7 +36,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-wetland-cream text-on-surface flex flex-col selection:bg-stream-jade selection:text-melaleuca-canopy">
+    <div className="min-h-screen bg-white text-charcoal-vintage flex flex-col selection:bg-[#555555] selection:text-white font-sans">
       {/* Shared Top Navigation */}
       <Navbar
         onOpenBooking={handleOpenBooking}
@@ -131,7 +134,7 @@ export default function App() {
           />
           <Route
             path="/lien-he"
-            element={<ContactPage currentLang={lang} />}
+            element={<ContactPage currentLang={lang} onOpenBooking={handleOpenBooking} />}
           />
           <Route
             path="/lien-he-chi-duong"
@@ -144,6 +147,22 @@ export default function App() {
           <Route
             path="/contact"
             element={<Navigate to="/lien-he" replace />}
+          />
+          <Route
+            path="/cam-nang"
+            element={<GuidePage currentLang={lang} onOpenBooking={handleOpenBooking} />}
+          />
+          <Route
+            path="/cam-nang-du-lich"
+            element={<Navigate to="/cam-nang" replace />}
+          />
+          <Route
+            path="/kinh-nghiem"
+            element={<Navigate to="/cam-nang" replace />}
+          />
+          <Route
+            path="/guide"
+            element={<Navigate to="/cam-nang" replace />}
           />
           <Route
             path="*"
@@ -171,6 +190,14 @@ export default function App() {
           currentLang={lang}
         />
       )}
+
+      {/* Special Privilege Popup Notification (appears on every page load / F5) */}
+      <PromoModal
+        isOpen={isPromoOpen}
+        onClose={() => setIsPromoOpen(false)}
+        onOpenBooking={handleOpenBooking}
+        currentLang={lang}
+      />
     </div>
   );
 }

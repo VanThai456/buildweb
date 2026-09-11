@@ -1,285 +1,351 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Navbar({ onOpenBooking, currentLang, setLang }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const baseUrl = import.meta.env.BASE_URL || '/';
 
+  // Close drawer on route change
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    setDrawerOpen(false);
+    setLangDropdownOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (drawerOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [drawerOpen]);
 
-  const isAbout = location.pathname === "/gioi-thieu";
-  const isTour =
-    location.pathname === "/tham-quan" ||
-    location.pathname === "/tham-quan-trai-nghiem";
-  const isResort =
-    location.pathname === "/khach-san-am-thuc" ||
-    location.pathname === "/khach-san" ||
-    location.pathname === "/nha-hang-khach-san";
-  const isPricing =
-    location.pathname === "/bang-gia-khuyen-mai" ||
-    location.pathname === "/bang-gia" ||
-    location.pathname === "/khuyen-mai" ||
-    location.pathname === "/uu-dai";
-  const isBooking =
-    location.pathname === "/dat-phong" ||
-    location.pathname === "/dat-phong-truc-tuyen" ||
-    location.pathname === "/dat-tour" ||
-    location.pathname === "/booking";
-  const isContact =
-    location.pathname === "/lien-he" ||
-    location.pathname === "/lien-he-chi-duong" ||
-    location.pathname === "/chi-duong" ||
-    location.pathname === "/contact";
-
-  // Menu items matching user specification with real page routing
   const navLinks = [
     {
-      id: "about",
-      label: currentLang === "vi" ? "GIỚI THIỆU" : "ABOUT US",
-      to: "/gioi-thieu",
-      active: isAbout,
+      id: 'home',
+      label: currentLang === 'vi' ? 'TRANG CHỦ' : 'HOME',
+      sublabel: currentLang === 'vi' ? 'Tổng quan khu du lịch & nghỉ dưỡng' : 'Overview & Sanctuary',
+      to: '/',
+      active: location.pathname === '/',
     },
     {
-      id: "tour",
-      label: currentLang === "vi" ? "THAM QUAN-TRẢI NGHIỆM" : "ATTRACTIONS & TOURS",
-      to: "/tham-quan",
-      active: isTour,
+      id: 'about',
+      label: currentLang === 'vi' ? 'GIỚI THIỆU & CÂU CHUYỆN DI SẢN' : 'ABOUT & HERITAGE',
+      sublabel: currentLang === 'vi' ? 'Sứ mệnh bảo tồn & rừng tràm 135ha' : 'Conservation mission & 135ha forest',
+      to: '/gioi-thieu',
+      active: location.pathname === '/gioi-thieu',
     },
     {
-      id: "resort",
-      label: currentLang === "vi" ? "NHÀ HÀNG & KHÁCH SẠN" : "RESTAURANT & HOTEL",
-      to: "/khach-san-am-thuc",
-      active: isResort,
+      id: 'tour',
+      label: currentLang === 'vi' ? 'THAM QUAN & TRẢI NGHIỆM' : 'ATTRACTIONS & TOURS',
+      sublabel: currentLang === 'vi' ? 'Cung đường 5km, xuồng ba lá & tháp 38m' : '5km trail, sampan cruise & 38m tower',
+      to: '/tham-quan',
+      active: location.pathname === '/tham-quan' || location.pathname === '/tham-quan-trai-nghiem',
     },
     {
-      id: "pricing",
-      label: currentLang === "vi" ? "TIN KHUYẾN MÃI & GIÁ DỊCH VỤ" : "PROMOTIONS & PRICING",
-      to: "/bang-gia-khuyen-mai",
-      active: isPricing,
+      id: 'resort',
+      label: currentLang === 'vi' ? 'KHÁCH SẠN & ẨM THỰC' : 'RESORT & DINING',
+      sublabel: currentLang === 'vi' ? 'Khách sạn 8 tầng & đặc sản Đồng Tháp Mười' : '8-floor eco-hotel & Mekong cuisine',
+      to: '/khach-san-am-thuc',
+      active: location.pathname === '/khach-san-am-thuc' || location.pathname === '/khach-san' || location.pathname === '/nha-hang-khach-san',
     },
     {
-      id: "booking",
-      label: currentLang === "vi" ? "ĐẶT PHÒNG" : "BOOK HOTEL",
-      to: "/dat-phong",
-      active: isBooking,
+      id: 'pricing',
+      label: currentLang === 'vi' ? 'BẢNG GIÁ DỊCH VỤ & ƯU ĐÃI' : 'RATES & PROMOTIONS',
+      sublabel: currentLang === 'vi' ? 'Combo vé, phòng nghỉ & gói tour hấp dẫn' : 'Tickets, packages & exclusive promotions',
+      to: '/bang-gia-khuyen-mai',
+      active: location.pathname === '/bang-gia-khuyen-mai' || location.pathname === '/bang-gia' || location.pathname === '/khuyen-mai' || location.pathname === '/uu-dai',
     },
     {
-      id: "contact",
-      label: currentLang === "vi" ? "LIÊN HỆ" : "CONTACT",
-      to: "/lien-he",
-      active: isContact,
+      id: 'booking',
+      label: currentLang === 'vi' ? 'ĐẶT PHÒNG TRỰC TUYẾN' : 'ONLINE BOOKING',
+      sublabel: currentLang === 'vi' ? 'Giữ chỗ nhanh, nhận xác nhận tức thì' : 'Fast reservation & instant confirmation',
+      to: '/dat-phong',
+      active: location.pathname === '/dat-phong' || location.pathname === '/dat-phong-truc-tuyen' || location.pathname === '/booking',
+    },
+    {
+      id: 'guide',
+      label: currentLang === 'vi' ? 'CẨM NANG DU LỊCH' : 'TRAVEL GUIDE',
+      sublabel: currentLang === 'vi' ? 'Kinh nghiệm khám phá & lịch trình gợi ý' : 'Field notes & recommended itineraries',
+      to: '/cam-nang',
+      active: location.pathname === '/cam-nang' || location.pathname === '/cam-nang-du-lich' || location.pathname === '/kinh-nghiem',
+    },
+    {
+      id: 'contact',
+      label: currentLang === 'vi' ? 'LIÊN HỆ & CHỈ ĐƯỜNG' : 'CONTACT & DIRECTIONS',
+      sublabel: currentLang === 'vi' ? 'Quốc lộ 62, Mộc Hóa, Long An' : 'Highway 62, Moc Hoa, Long An',
+      to: '/lien-he',
+      active: location.pathname === '/lien-he' || location.pathname === '/contact' || location.pathname === '/chi-duong',
     },
   ];
 
-  const handleItemClick = (e, link) => {
-    setMobileMenuOpen(false);
-
-    if (link.action === "booking") {
-      e.preventDefault();
-      onOpenBooking(
-        currentLang === "vi"
-          ? "Đặt phòng Khách sạn Làng Nổi (8 tầng)"
-          : "Hotel Reservation (8 Floors)"
-      );
-      return;
-    }
-
-    if (link.to) {
-      if (location.pathname === link.to) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleBookNow = (e) => {
+    e.preventDefault();
+    if (location.pathname === '/') {
+      const el = document.querySelector('#booking');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
       }
-      return;
     }
-
-    if (link.id === "pricing") {
-      e.preventDefault();
-      const target =
-        document.querySelector("#bang-gia") ||
-        document.querySelector("#pricing");
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth" });
-      } else {
-        navigate("/#pricing");
-        setTimeout(() => {
-          const el = document.querySelector("#pricing");
-          if (el) el.scrollIntoView({ behavior: "smooth" });
-        }, 120);
-      }
-      return;
-    }
-
-    if (link.hash) {
-      e.preventDefault();
-      const targetOnCurrentPage = document.querySelector(link.hash);
-      if (targetOnCurrentPage) {
-        targetOnCurrentPage.scrollIntoView({ behavior: "smooth" });
-      } else {
-        navigate("/" + link.hash);
-        setTimeout(() => {
-          const target = document.querySelector(link.hash);
-          if (target) {
-            target.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 120);
-      }
+    if (onOpenBooking) {
+      onOpenBooking('Suite Sanctuary Rừng Tràm');
+    } else {
+      navigate('/dat-phong');
     }
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#FAFAF5]/95 backdrop-blur-md shadow-sm border-b border-[#1B4D3E]/10"
-          : "bg-[#FAFAF5]/90 backdrop-blur-sm border-b border-[#1B4D3E]/5"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex justify-between items-center h-20">
-        {/* Brand Identity */}
-        <Link
-          to="/"
-          onClick={() => {
-            if (location.pathname === "/") {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }
-          }}
-          className="flex items-center gap-2.5 group shrink-0"
-        >
-          <div className="w-10 h-10 shrink-0 rounded-full bg-[#1B4D3E] text-white flex items-center justify-center shadow-sm transition-transform group-hover:scale-105">
-            <span className="material-symbols-outlined text-[22px]">
-              sailing
+    <>
+      {/* ================= STITCH EXACT HEADER & TOP NAVIGATION (Ana Mandara Style) ================= */}
+      <header className="sticky top-0 left-0 w-full z-50 bg-white border-b border-gray-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)] h-20 md:h-24 transition-all">
+        <div className="w-full h-full flex items-center justify-between px-4 sm:px-6 lg:px-10">
+          {/* Left: Clean minimal hamburger menu icon */}
+          <div className="flex items-center gap-3 sm:gap-4 w-36 sm:w-48">
+            <button
+              aria-label="Menu"
+              onClick={() => setDrawerOpen(true)}
+              className="group flex flex-col justify-center items-start gap-1.5 p-2 focus:outline-none cursor-pointer"
+              type="button"
+            >
+              <span className="w-7 h-[2px] bg-charcoal-vintage transition-all group-hover:bg-olive-moss group-hover:w-8"></span>
+              <span className="w-7 h-[2px] bg-charcoal-vintage transition-all group-hover:bg-olive-moss"></span>
+              <span className="w-7 h-[2px] bg-charcoal-vintage transition-all group-hover:bg-olive-moss group-hover:w-6"></span>
+            </button>
+            <span className="hidden md:inline-block font-sans text-xs uppercase tracking-[0.16em] text-charcoal-muted font-medium select-none">
+              {currentLang === 'vi' ? 'Menu' : 'Menu'}
             </span>
           </div>
-          <div className="flex min-w-0 flex-col text-left">
-            <span className="font-serif text-[16px] sm:text-[17px] leading-[1.15] text-[#1B4D3E] font-bold tracking-tight">
-              Làng Nổi Tân Lập
-            </span>
-            <span className="mt-0.5 text-[8px] leading-[1.3] text-[#2D6A4F] tracking-[0.16em] uppercase font-semibold">
-              ECO SANCTUARY • LONG AN
-            </span>
+
+          {/* Center: Refined brand logo with Official Heritage Crest Emblem */}
+          <div className="flex-1 flex flex-col items-center justify-center text-center py-1">
+            <Link
+              to="/"
+              onClick={() => {
+                if (location.pathname === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="flex flex-col items-center group py-0.5"
+            >
+              {/* Official Tan Lap Heritage Crest Emblem (Crane, Melaleuca, Sampan) */}
+              <img
+                src={`${baseUrl}images/logo-tanlap-mark.png`}
+                alt="Làng Nổi Tân Lập Logo"
+                className="w-10 h-10 md:w-11 md:h-11 object-contain mb-1 transition-transform duration-300 group-hover:scale-105 filter drop-shadow-xs"
+              />
+              <span className="font-serif-luxury text-lg sm:text-xl md:text-2xl font-semibold tracking-[0.24em] uppercase text-charcoal-vintage leading-none">
+                LÀNG NỔI TÂN LẬP
+              </span>
+              <span className="font-serif-luxury text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-olive-moss mt-1 font-medium">
+                ECO SANCTUARY &amp; RESORT • LONG AN
+              </span>
+            </Link>
           </div>
-        </Link>
 
-        {/* Desktop Navigation - 6 items matching user specification */}
-        <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-7">
-          {navLinks.map((link) => {
-            const baseClassName = `text-[12px] xl:text-[13px] 2xl:text-[14px] uppercase tracking-wider font-bold transition-all duration-200 cursor-pointer whitespace-nowrap py-1 relative ${
-              link.active
-                ? "text-[#1B4D3E] after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2.5px] after:bg-[#1B4D3E] after:rounded-full"
-                : "text-[#111D23] hover:text-[#2D6A4F]"
-            }`;
+          {/* Right: Language Switcher + Solid Olive Green 'ĐẶT NGAY' Button */}
+          <div className="flex items-center justify-end gap-3 sm:gap-6 w-auto sm:w-48 h-full">
+            {/* Language Selector */}
+            <div className="relative">
+              <button
+                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+                className="hidden sm:flex items-center gap-1.5 text-xs text-charcoal-vintage hover:text-olive-moss cursor-pointer tracking-wider transition-colors py-2"
+                type="button"
+              >
+                <span className="material-symbols-outlined text-base" data-icon="language">
+                  language
+                </span>
+                <span className="font-medium text-[13px]">
+                  {currentLang === 'vi' ? 'Tiếng Việt' : 'English'}
+                </span>
+                <span className="material-symbols-outlined text-sm" data-icon="arrow_drop_down">
+                  arrow_drop_down
+                </span>
+              </button>
 
-            if (link.to) {
-              return (
+              {/* Language Dropdown */}
+              {langDropdownOpen && (
+                <div className="absolute right-0 mt-1 w-32 bg-white rounded-md shadow-xl border border-gray-100 py-1.5 z-50 animate-fadeIn">
+                  <button
+                    onClick={() => {
+                      setLang('vi');
+                      setLangDropdownOpen(false);
+                    }}
+                    className={`w-full text-left px-3.5 py-1.5 text-xs tracking-wider flex items-center justify-between ${
+                      currentLang === 'vi' ? 'bg-linen-sand text-olive-moss font-semibold' : 'text-charcoal-vintage hover:bg-linen-warm'
+                    }`}
+                  >
+                    Tiếng Việt
+                    {currentLang === 'vi' && <span className="material-symbols-outlined text-sm">check</span>}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setLang('en');
+                      setLangDropdownOpen(false);
+                    }}
+                    className={`w-full text-left px-3.5 py-1.5 text-xs tracking-wider flex items-center justify-between ${
+                      currentLang === 'en' ? 'bg-linen-sand text-olive-moss font-semibold' : 'text-charcoal-vintage hover:bg-linen-warm'
+                    }`}
+                  >
+                    English
+                    {currentLang === 'en' && <span className="material-symbols-outlined text-sm">check</span>}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Solid olive-moss green rectangular button full navbar height */}
+            <button
+              onClick={handleBookNow}
+              className="h-20 md:h-24 px-5 sm:px-8 bg-olive-moss hover:bg-olive-dark text-white font-sans text-xs md:text-sm font-bold tracking-[0.16em] uppercase flex items-center justify-center transition-colors duration-200 cursor-pointer shrink-0"
+              type="button"
+            >
+              {currentLang === 'vi' ? 'ĐẶT NGAY' : 'BOOK NOW'}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* ================= LUXURY NAVIGATION DRAWER (Full Page / Side Drawer) ================= */}
+      {drawerOpen && (
+        <div className="fixed inset-0 z-[100] flex animate-fadeIn">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setDrawerOpen(false)}
+          ></div>
+
+          {/* Drawer Content */}
+          <div className="relative w-full max-w-lg bg-linen-warm h-full shadow-2xl z-10 flex flex-col justify-between overflow-y-auto border-r border-gray-200">
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between p-6 md:p-8 border-b border-gray-200/80 bg-white">
+              <div className="flex items-center gap-3">
+                <img
+                  src={`${baseUrl}images/logo-tanlap-mark.png`}
+                  alt="Làng Nổi Tân Lập Logo"
+                  className="w-10 h-10 object-contain"
+                />
+                <div className="text-left">
+                  <span className="font-serif-luxury text-lg font-semibold tracking-[0.2em] uppercase text-charcoal-vintage block leading-none">
+                    LÀNG NỔI TÂN LẬP
+                  </span>
+                  <span className="font-serif-luxury text-[9px] tracking-[0.24em] uppercase text-olive-moss font-medium">
+                    ECO SANCTUARY &amp; RESORT • LONG AN
+                  </span>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setDrawerOpen(false)}
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-charcoal-vintage hover:bg-olive-moss hover:text-white hover:border-olive-moss transition-colors cursor-pointer"
+                aria-label="Close menu"
+              >
+                <span className="material-symbols-outlined text-xl">close</span>
+              </button>
+            </div>
+
+            {/* Navigation List */}
+            <nav className="p-6 md:p-8 flex-1 space-y-1">
+              <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-olive-moss mb-4">
+                {currentLang === 'vi' ? 'DANH MỤC KHÁM PHÁ' : 'NAVIGATION MENU'}
+              </div>
+              {navLinks.map((link) => (
                 <Link
                   key={link.id}
                   to={link.to}
-                  onClick={(e) => handleItemClick(e, link)}
-                  className={baseClassName}
+                  onClick={() => setDrawerOpen(false)}
+                  className={`group block p-3.5 rounded-lg transition-all duration-200 ${
+                    link.active
+                      ? 'bg-white shadow-sm border-l-4 border-olive-moss'
+                      : 'hover:bg-white/80 hover:translate-x-1'
+                  }`}
                 >
-                  {link.label}
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={`font-serif-luxury text-lg md:text-xl font-semibold tracking-[0.14em] uppercase transition-colors ${
+                        link.active ? 'text-olive-moss' : 'text-charcoal-vintage group-hover:text-olive-moss'
+                      }`}
+                    >
+                      {link.label}
+                    </span>
+                    <span className="material-symbols-outlined text-sm text-charcoal-muted group-hover:text-olive-moss group-hover:translate-x-1 transition-all">
+                      arrow_forward
+                    </span>
+                  </div>
+                  <span className="block text-xs text-charcoal-muted font-light tracking-wide mt-0.5">
+                    {link.sublabel}
+                  </span>
                 </Link>
-              );
-            }
+              ))}
+            </nav>
 
-            return (
-              <button
-                key={link.id}
-                type="button"
-                onClick={(e) => handleItemClick(e, link)}
-                className={`${baseClassName} bg-transparent border-0`}
-              >
-                {link.label}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Trailing Action Hub */}
-        <div className="flex items-center gap-2.5 md:gap-3.5 shrink-0">
-          {/* Language Switcher Dual Pill */}
-          <div className="flex items-center bg-[#F3F4ED] p-1 rounded-full border border-[#1B4D3E]/10">
-            <button
-              onClick={() => setLang("vi")}
-              className={`px-2 py-0.5 rounded-full font-bold text-[11px] transition-all cursor-pointer ${
-                currentLang === "vi"
-                  ? "bg-[#1B4D3E] text-white shadow-xs"
-                  : "text-[#404945] hover:text-[#1B4D3E]"
-              }`}
-            >
-              VI
-            </button>
-            <button
-              onClick={() => setLang("en")}
-              className={`px-2 py-0.5 rounded-full font-bold text-[11px] transition-all cursor-pointer ${
-                currentLang === "en"
-                  ? "bg-[#1B4D3E] text-white shadow-xs"
-                  : "text-[#404945] hover:text-[#1B4D3E]"
-              }`}
-            >
-              EN
-            </button>
-          </div>
-
-          {/* Mobile Menu Toggle Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-[#1B4D3E] rounded-lg hover:bg-[#F3F4ED] focus:outline-none cursor-pointer"
-            aria-label="Toggle Menu"
-          >
-            <span className="material-symbols-outlined text-2xl">
-              {mobileMenuOpen ? "close" : "menu"}
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#FAFAF5] border-b border-[#1B4D3E]/15 px-6 py-4 shadow-xl animate-fadeIn">
-          <nav className="flex flex-col space-y-1 pb-3 border-b border-[#1B4D3E]/10">
-            {navLinks.map((link) => {
-              const mobileClass = `text-[13.5px] uppercase tracking-wider font-bold py-2.5 text-left transition-colors cursor-pointer ${
-                link.active
-                  ? "text-[#1B4D3E] font-extrabold"
-                  : "text-[#111D23] hover:text-[#2D6A4F]"
-              }`;
-
-              if (link.to) {
-                return (
-                  <Link
-                    key={link.id}
-                    to={link.to}
-                    onClick={(e) => handleItemClick(e, link)}
-                    className={mobileClass}
+            {/* Drawer Footer: Language & Quick Contact */}
+            <div className="p-6 md:p-8 bg-white border-t border-gray-200/80 space-y-4">
+              {/* Language Switcher */}
+              <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+                <span className="text-xs uppercase tracking-wider text-charcoal-muted font-medium">
+                  {currentLang === 'vi' ? 'Ngôn ngữ' : 'Language'}
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setLang('vi')}
+                    className={`px-3 py-1 rounded text-xs font-semibold tracking-wider transition-colors ${
+                      currentLang === 'vi' ? 'bg-olive-moss text-white' : 'bg-gray-100 text-charcoal-vintage hover:bg-gray-200'
+                    }`}
                   >
-                    {link.label}
-                  </Link>
-                );
-              }
+                    VI
+                  </button>
+                  <button
+                    onClick={() => setLang('en')}
+                    className={`px-3 py-1 rounded text-xs font-semibold tracking-wider transition-colors ${
+                      currentLang === 'en' ? 'bg-olive-moss text-white' : 'bg-gray-100 text-charcoal-vintage hover:bg-gray-200'
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
 
-              return (
-                <button
-                  key={link.id}
-                  type="button"
-                  onClick={(e) => handleItemClick(e, link)}
-                  className={`${mobileClass} bg-transparent border-0`}
-                >
-                  {link.label}
-                </button>
-              );
-            })}
-          </nav>
+              {/* Contact info */}
+              <div className="space-y-1 text-xs text-charcoal-muted">
+                <p className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-sm text-olive-moss">call</span>
+                  <a href="tel:02723968133" className="hover:text-olive-moss font-semibold">
+                    0272 3968 133
+                  </a>
+                  <span className="text-gray-300">|</span>
+                  <a href="tel:0966893943" className="hover:text-olive-moss font-semibold">
+                    0966 893 943
+                  </a>
+                </p>
+                <p className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-sm text-olive-moss">location_on</span>
+                  <span>QL62, Tân Lập, Mộc Hóa, Long An</span>
+                </p>
+              </div>
+
+              {/* Action Button inside drawer */}
+              <button
+                onClick={(e) => {
+                  setDrawerOpen(false);
+                  handleBookNow(e);
+                }}
+                className="w-full py-3 bg-olive-moss hover:bg-olive-dark text-white font-sans text-xs uppercase tracking-[0.2em] font-bold transition-colors shadow-md cursor-pointer flex items-center justify-center gap-2"
+                type="button"
+              >
+                <span>{currentLang === 'vi' ? 'ĐẶT PHÒNG & TOUR NGAY' : 'BOOK EXPERIENCE NOW'}</span>
+                <span className="material-symbols-outlined text-sm">calendar_month</span>
+              </button>
+            </div>
+          </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

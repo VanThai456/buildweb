@@ -1,23 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-/* Font aliases ensuring compatibility across all naming conventions */
-@font-face {
-  font-family: 'Playfair_Display';
-  src: local('Playfair Display');
-}
-
-@font-face {
-  font-family: 'Be_Vietnam_Pro';
-  src: local('Be Vietnam Pro');
-}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lora:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Be+Vietnam+Pro:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&display=swap');
 
 :root {
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Lora', Georgia, serif;
+  --font-sans: 'Montserrat', 'Plus Jakarta Sans', 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Global Custom Selection: Refined Medium Gray (#555555) with crisp white text */
+::selection {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+}
+
+::-moz-selection {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+}
+
+*::selection {
+  background-color: #555555 !important;
+  color: #ffffff !important;
+}
+
+*::-moz-selection {
+  background-color: #555555 !important;
+  color: #ffffff !important;
 }
 
 html {
@@ -29,9 +39,10 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
+  font-weight: 300;
   background-color: #FAFAF5;
-  color: #111D23;
+  color: #2a3325;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -47,36 +58,90 @@ body {
   flex-direction: column;
 }
 
-/* Bulletproof typography mappings for Vietnamese text rendering */
+/* ==========================================================================
+   GENTLE EDITORIAL LUXURY TYPOGRAPHY (Matching User Reference Image)
+   ========================================================================== */
+
+/* All Headings: Slender, graceful, light luxury serif */
+h1, h2, h3, h4, h5, h6,
 .font-serif,
-.font-playfair,
+.font-serif-luxury,
+.font-display-hero,
+.font-headline-xl,
 .font-headline-lg,
 .font-headline-md,
 .font-headline-sm,
-.font-display-hero,
+.font-playfair,
+.font-eyebrow-serif,
 [class*="font-['Playfair_Display']"],
-[class*="font-['Playfair Display']"] {
-  font-family: 'Playfair Display', Georgia, serif !important;
+[class*="font-['Playfair Display']"],
+[class*="font-['Cormorant_Garamond']"],
+[class*="font-['Cormorant Garamond']"] {
+  font-family: 'Cormorant Garamond', 'Lora', Georgia, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.025em;
+  text-rendering: optimizeLegibility;
 }
 
-.font-sans,
-.font-be-vietnam,
-.font-subhead-lg,
-.font-subhead-md,
+/* Paragraphs & Reading Content: Light, airy, comfortable line-height */
+p,
 .font-body-lg,
 .font-body-md,
 .font-body-sm,
-.font-label-lg,
-.font-label-sm,
+.font-subhead-lg,
+.font-subhead-md,
+.font-sans,
 [class*="font-['Be_Vietnam_Pro']"],
-[class*="font-['Be Vietnam Pro']"] {
-  font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+[class*="font-['Be Vietnam Pro']"],
+[class*="font-['Montserrat']"] {
+  font-family: 'Montserrat', 'Plus Jakarta Sans', 'Be Vietnam Pro', -apple-system, sans-serif !important;
+  font-weight: 300 !important;
+  line-height: 1.85 !important;
+  letter-spacing: 0.015em;
+  color: #475242;
+}
+
+/* Soft delicate contrast for bold elements */
+strong, b {
+  font-weight: 500 !important;
+  color: #1a2217;
+}
+
+/* Labels, CTAs and Metadata */
+.font-label-meta,
+.font-label-cta,
+.font-label-lg,
+.font-label-sm {
+  font-family: 'Montserrat', 'Plus Jakarta Sans', 'Be Vietnam Pro', sans-serif !important;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+}
+
+/* Play button ripple effect */
+.play-btn-pulse {
+  position: relative;
+}
+
+.play-btn-pulse:hover::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
 }
 
 /* Material Symbols alignment and protection against text-transform */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined' !important;
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
   vertical-align: middle;
   line-height: 1;
   display: inline-flex;
@@ -111,12 +176,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2D6A4F;
+  background: #608a3d;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1B4D3E;
+  background: #4a6d2c;
 }
 
 /* Subtle image transitions */

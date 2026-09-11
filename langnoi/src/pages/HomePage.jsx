@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from '../components/Hero';
-import Attractions from '../components/Attractions';
-import Experiences from '../components/Experiences';
-import Resort from '../components/Resort';
-import Cuisine from '../components/Cuisine';
-import Pricing from '../components/Pricing';
-import TravelGuide from '../components/TravelGuide';
+import HeritageStory from '../components/home/HeritageStory';
+import ServiceTiles from '../components/home/ServiceTiles';
+import SpecialOffers from '../components/home/SpecialOffers';
+import NewsletterContact from '../components/home/NewsletterContact';
 
 export default function HomePage({ onOpenBooking, currentLang }) {
   const location = useLocation();
@@ -25,31 +23,28 @@ export default function HomePage({ onOpenBooking, currentLang }) {
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    document.title = 'Làng Nổi Tân Lập - Khu Du Lịch Sinh Thái Rừng Tràm Cổ Thụ Long An';
-  }, [location]);
+    document.title =
+      currentLang === 'vi'
+        ? 'Làng Nổi Tân Lập Resort & Eco Sanctuary | Đồng Tháp Mười, Long An'
+        : 'Tan Lap Floating Village Resort & Eco Sanctuary | Dong Thap Muoi, Long An';
+  }, [location, currentLang]);
 
   return (
-    <main>
-      {/* 1. Hero Section */}
+    <main className="w-full bg-white text-charcoal-vintage">
+      {/* 2. Hero Section (Ana Mandara Atmospheric Resort Hero + Quick Floating Booking Bar) */}
       <Hero onOpenBooking={onOpenBooking} currentLang={currentLang} />
 
-      {/* 2. Iconic Attractions Bento Grid */}
-      <Attractions currentLang={currentLang} />
+      {/* 3. Editorial Story Section (Exact Ana Mandara Layout) */}
+      <HeritageStory currentLang={currentLang} />
 
-      {/* 3. Riverway Experiences */}
-      <Experiences onOpenBooking={onOpenBooking} currentLang={currentLang} />
+      {/* 4. Experience & Service Tiles (5-card Grid) */}
+      <ServiceTiles onOpenBooking={onOpenBooking} currentLang={currentLang} />
 
-      {/* 4. Hotel & Resort Accommodation */}
-      <Resort onOpenBooking={onOpenBooking} currentLang={currentLang} />
+      {/* 5. Special Offers / Promotions Slider (Cùng Bạn Hưởng Thụ Cuộc Sống) */}
+      <SpecialOffers onOpenBooking={onOpenBooking} currentLang={currentLang} />
 
-      {/* 5. Western Countryside Cuisine */}
-      <Cuisine onOpenBooking={onOpenBooking} currentLang={currentLang} />
-
-      {/* 6. Pricing & Combos */}
-      <Pricing onOpenBooking={onOpenBooking} currentLang={currentLang} />
-
-      {/* 7. Travel Route & Location Guide */}
-      <TravelGuide currentLang={currentLang} />
+      {/* 6. Newsletter Subscription & Contact Section */}
+      <NewsletterContact currentLang={currentLang} />
     </main>
   );
 }
