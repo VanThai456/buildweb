@@ -1,30 +1,32 @@
-import { useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import BookingModal from './components/BookingModal';
-import PromoModal from './components/PromoModal';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import TourPage from './pages/TourPage';
-import ResortPage from './pages/ResortPage';
-import PricingPage from './pages/PricingPage';
-import BookingPage from './pages/BookingPage';
-import ContactPage from './pages/ContactPage';
-import GuidePage from './pages/GuidePage';
+import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import BookingModal from "./components/BookingModal";
+import PromoModal from "./components/PromoModal";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import TourPage from "./pages/TourPage";
+import ResortPage from "./pages/ResortPage";
+import PricingPage from "./pages/PricingPage";
+import BookingPage from "./pages/BookingPage";
+import ContactPage from "./pages/ContactPage";
+import GuidePage from "./pages/GuidePage";
 
 export default function App() {
-  const [lang, setLang] = useState('vi');
+  const [lang, setLang] = useState("vi");
   const [isPromoOpen, setIsPromoOpen] = useState(true);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState('Vé tham quan & Tour trọn gói');
+  const [selectedService, setSelectedService] = useState(
+    "Vé tham quan & Tour trọn gói",
+  );
   const [bookingDetails, setBookingDetails] = useState({
-    date: '15/10/2024',
-    guests: '2 Người lớn, 1 Trẻ em',
+    date: "15/10/2024",
+    guests: "2 Người lớn, 1 Trẻ em",
   });
 
   const handleOpenBooking = (serviceName, details = null) => {
-    setSelectedService(serviceName || 'Vé tham quan & Tour trọn gói');
+    setSelectedService(serviceName || "Vé tham quan & Tour trọn gói");
     if (details) {
       setBookingDetails(details);
     }
@@ -50,28 +52,19 @@ export default function App() {
           <Route
             path="/"
             element={
-              <HomePage
-                onOpenBooking={handleOpenBooking}
-                currentLang={lang}
-              />
+              <HomePage onOpenBooking={handleOpenBooking} currentLang={lang} />
             }
           />
           <Route
             path="/gioi-thieu"
             element={
-              <AboutPage
-                onOpenBooking={handleOpenBooking}
-                currentLang={lang}
-              />
+              <AboutPage onOpenBooking={handleOpenBooking} currentLang={lang} />
             }
           />
           <Route
             path="/tham-quan"
             element={
-              <TourPage
-                onOpenBooking={handleOpenBooking}
-                currentLang={lang}
-              />
+              <TourPage onOpenBooking={handleOpenBooking} currentLang={lang} />
             }
           />
           <Route
@@ -134,7 +127,12 @@ export default function App() {
           />
           <Route
             path="/lien-he"
-            element={<ContactPage currentLang={lang} onOpenBooking={handleOpenBooking} />}
+            element={
+              <ContactPage
+                currentLang={lang}
+                onOpenBooking={handleOpenBooking}
+              />
+            }
           />
           <Route
             path="/lien-he-chi-duong"
@@ -144,13 +142,12 @@ export default function App() {
             path="/chi-duong"
             element={<Navigate to="/lien-he" replace />}
           />
-          <Route
-            path="/contact"
-            element={<Navigate to="/lien-he" replace />}
-          />
+          <Route path="/contact" element={<Navigate to="/lien-he" replace />} />
           <Route
             path="/cam-nang"
-            element={<GuidePage currentLang={lang} onOpenBooking={handleOpenBooking} />}
+            element={
+              <GuidePage currentLang={lang} onOpenBooking={handleOpenBooking} />
+            }
           />
           <Route
             path="/cam-nang-du-lich"
@@ -160,17 +157,11 @@ export default function App() {
             path="/kinh-nghiem"
             element={<Navigate to="/cam-nang" replace />}
           />
-          <Route
-            path="/guide"
-            element={<Navigate to="/cam-nang" replace />}
-          />
+          <Route path="/guide" element={<Navigate to="/cam-nang" replace />} />
           <Route
             path="*"
             element={
-              <HomePage
-                onOpenBooking={handleOpenBooking}
-                currentLang={lang}
-              />
+              <HomePage onOpenBooking={handleOpenBooking} currentLang={lang} />
             }
           />
         </Routes>
@@ -182,7 +173,7 @@ export default function App() {
       {/* Shared Interactive Booking Modal */}
       {isBookingOpen && (
         <BookingModal
-          key={`${selectedService}-${bookingDetails?.date || ''}`}
+          key={`${selectedService}-${bookingDetails?.date || ""}`}
           isOpen={isBookingOpen}
           onClose={handleCloseBooking}
           initialService={selectedService}
@@ -201,3 +192,4 @@ export default function App() {
     </div>
   );
 }
+// TEST GIT
