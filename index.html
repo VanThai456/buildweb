@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="vi" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khu Du Lịch Sinh Thái Làng Nổi Tân Lập | Long An</title>
+    <meta name="description" content="Trải nghiệm cung đường bộ xuyên rừng tràm 5km độc nhất vô nhị, xuồng ba lá lướt nhẹ trên bèo cám và không gian nghỉ dưỡng biệt lập giữa thiên nhiên hoang sơ của vùng đất ngập nước Đồng Tháp Mười." />
+    
+    <!-- Google Fonts with full weights for Vietnamese diacritics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    
+    <!-- Tailwind CSS via CDN with full design theme tokens -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "melaleuca-canopy": "#1B4D3E",
+              "forest-moss": "#2D6A4F",
+              "stream-jade": "#52B788",
+              "mist-emerald": "#74C69D",
+              "alluvial-earth": "#D4A373",
+              "timeless-bark": "#8C6239",
+              "wetland-cream": "#FAFAF5",
+              "tranquil-sand": "#F3F4ED",
+              "waterway-blue": "#1A82C4",
+              "primary": "#003629",
+              "primary-container": "#1b4d3e",
+              "on-primary": "#ffffff",
+              "on-primary-container": "#8abda9",
+              "secondary": "#006c48",
+              "secondary-container": "#92f7c3",
+              "on-secondary": "#ffffff",
+              "on-secondary-container": "#00734d",
+              "tertiary": "#462702",
+              "tertiary-container": "#603d16",
+              "on-tertiary": "#ffffff",
+              "on-tertiary-container": "#daa978",
+              "surface": "#f4faff",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-low": "#e9f6fd",
+              "surface-container": "#e3f0f8",
+              "surface-container-high": "#ddeaf2",
+              "surface-container-highest": "#d7e4ec",
+              "surface-variant": "#d7e4ec",
+              "on-surface": "#111d23",
+              "on-surface-variant": "#404945",
+              "inverse-surface": "#263238",
+              "inverse-on-surface": "#e6f3fb",
+              "outline": "#707974",
+              "outline-variant": "#c0c9c3",
+              "surface-tint": "#376757",
+              "primary-fixed": "#baeed9",
+              "primary-fixed-dim": "#9ed1bd",
+              "on-primary-fixed": "#002117",
+              "on-primary-fixed-variant": "#1d4f40",
+              "secondary-fixed": "#92f7c3",
+              "secondary-fixed-dim": "#75daa8",
+              "on-secondary-fixed": "#002113",
+              "on-secondary-fixed-variant": "#005235",
+              "tertiary-fixed": "#ffdcbd",
+              "tertiary-fixed-dim": "#f0bd8b",
+              "on-tertiary-fixed": "#2c1600",
+              "on-tertiary-fixed-variant": "#623f18",
+              "background": "#f4faff",
+              "on-background": "#111d23"
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "2xl": "1rem",
+              "3xl": "1.5rem",
+              "full": "9999px"
+            },
+            spacing: {
+              "space-xs": "0.375rem",
+              "space-sm": "0.75rem",
+              "space-md": "1.25rem",
+              "space-lg": "2rem",
+              "space-xl": "3.5rem",
+              "gutter": "1.5rem",
+              "gutter-sm": "1rem",
+              "margin": "3rem",
+              "margin-sm": "1.25rem"
+            },
+            fontFamily: {
+              serif: ["'Playfair Display'", "Georgia", "serif"],
+              sans: ["'Be Vietnam Pro'", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "sans-serif"],
+              "Playfair_Display": ["'Playfair Display'", "Georgia", "serif"],
+              "Be_Vietnam_Pro": ["'Be Vietnam Pro'", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "sans-serif"],
+              "headline-lg": ["'Playfair Display'", "Georgia", "serif"],
+              "headline-md": ["'Playfair Display'", "Georgia", "serif"],
+              "headline-sm": ["'Playfair Display'", "Georgia", "serif"],
+              "display-hero": ["'Playfair Display'", "Georgia", "serif"],
+              "subhead-lg": ["'Be Vietnam Pro'", "sans-serif"],
+              "subhead-md": ["'Be Vietnam Pro'", "sans-serif"],
+              "body-lg": ["'Be Vietnam Pro'", "sans-serif"],
+              "body-md": ["'Be Vietnam Pro'", "sans-serif"],
+              "body-sm": ["'Be Vietnam Pro'", "sans-serif"],
+              "label-lg": ["'Be Vietnam Pro'", "sans-serif"],
+              "label-sm": ["'Be Vietnam Pro'", "sans-serif"]
+            },
+            fontSize: {
+              "display-hero": ["56px", { lineHeight: "68px", fontWeight: "600" }],
+              "display-hero-mobile": ["36px", { lineHeight: "44px", fontWeight: "600" }],
+              "headline-lg": ["40px", { lineHeight: "48px", fontWeight: "600" }],
+              "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
+              "headline-md": ["28px", { lineHeight: "36px", fontWeight: "500" }],
+              "headline-sm": ["22px", { lineHeight: "30px", fontWeight: "500" }],
+              "subhead-lg": ["18px", { lineHeight: "28px", fontWeight: "500" }],
+              "subhead-md": ["16px", { lineHeight: "24px", fontWeight: "500" }],
+              "body-lg": ["18px", { lineHeight: "30px", fontWeight: "400" }],
+              "body-md": ["15px", { lineHeight: "24px", fontWeight: "400" }],
+              "body-sm": ["13px", { lineHeight: "20px", fontWeight: "400" }],
+              "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }]
+            }
+          }
+        }
+      };
+    </script>
+    <script type="module" crossorigin src="/buildweb/assets/index-COHuydph.js"></script>
+    <link rel="stylesheet" crossorigin href="/buildweb/assets/index-DgJcicz2.css">
+  </head>
+  <body class="bg-wetland-cream text-on-surface font-body-md text-body-md antialiased selection:bg-stream-jade selection:text-melaleuca-canopy">
+    <div id="root"></div>
+  </body>
+</html>
